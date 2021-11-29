@@ -24,8 +24,8 @@ def violin(axe, data: pd.DataFrame, title="", x_label=None, field="Duration"):
 def point_plot(axe, data: pd.DataFrame, title="", x='security', y="Duration", hue='编组大小'):
     axe.grid(linestyle="--")
     p = sns.color_palette("Paired")
-    ax = sns.pointplot(x=x, y=y, hue=hue, data=data, ax=axe, linewidth=1, palette=p,
-                       saturation=1, ci=95, markers=[".", "x", ".", "x"], dodge=True, )
+    ax = sns.pointplot(x=x, y=y, hue=hue, data=data, ax=axe, linewidth=1, palette=p, linestyles=["-", "-", "--", "--"],
+                       saturation=1, ci='sd', markers=[".", "x", ".", "x"], dodge=True, errwidth=2)
 
     ax.set_ylabel(None)
     ax.set_xlabel(None)

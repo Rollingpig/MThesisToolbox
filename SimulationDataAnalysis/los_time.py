@@ -65,7 +65,22 @@ if __name__ == '__main__':
                   ],
          "title": '常速列车为主 2045'},
     ]
+    param4 = [
+        {"position": (0, 0),
+         "file": ['los concourse edge shrt 2035 scr.csv',
+                  'los concourse edge shrt 2035 noscr.csv',
+                  'los concourse edge shrt 2035 face.csv'
+                  ],
+         "title": '城际列车为主'},
+        {"position": (0, 1),
+         "file": ['los concourse edge lng 2035 scr.csv',
+                  'los concourse edge lng 2035 noscr.csv',
+                  'los concourse edge lng 2035 face.csv'
+                  ],
+         "title": '常速列车为主'},
+    ]
     # LOSViolin().draw(param2, ylabel='低于LOS B的持续时间 (秒)', file_name='gate', ylim=(-5, 70), file_prefix='los-')
-    LOSViolin().draw(param3, ylabel='低于LOS B的持续时间 (秒)', file_name='train-to-mtr', ylim=(0, 600))
+    # LOSViolin().draw(param3, ylabel='低于LOS B的持续时间 (秒)', file_name='train-to-mtr', ylim=(0, 600))
+    LOSViolin().draw(param4, ylabel='低于LOS B的持续时间 (秒)', file_name='los-concourse', ylim=(0, 300))
     # LOSViolin().draw(param1, ylabel='低于LOS B的持续时间 (秒)', file_name='lobby', ylim=(0, 350), file_prefix='los-')
 

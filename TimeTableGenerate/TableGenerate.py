@@ -104,7 +104,7 @@ def create_long_shift_group(working_dir, period=600):
 
 if __name__ == '__main__':
     working_directory = 'E:/Master/Thesis/Simulation/current/Tables/'
+    # create_short_shift_group(working_directory)
     create_long_shift_group(working_directory)
-    # create_long_shift_group(working_directory)
     # long_shift_group_random(working_directory)
     # short_shift_group_random(working_directory)
