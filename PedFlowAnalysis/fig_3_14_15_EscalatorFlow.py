@@ -36,13 +36,13 @@ def draw_line(flows, axe, bin_len=31, color=None, time_offset=0):
 def cumulative_and_flow(folder, tlim):
     """分析"""
     flows = []
-    for root, dirs, files in os.walk(folder):
+    for root, dirs, files in os.walk('Data/'+folder):
         for f in files:
             path = os.path.join(root, f)
             flows.append(read_flow_from_arc_time(path))
 
     fig, ax = plt.subplots(nrows=1, ncols=2, constrained_layout=True,
-                           figsize=(6, 2), )
+                           figsize=(5.8, 2), )
 
     length = 16
     q = np.zeros([len(flows), length * 60])
@@ -84,7 +84,7 @@ def cumulative_and_flow(folder, tlim):
     ax[1].set_ylim([0, max(res2)+10])
     ax[1].set_xlabel('半数旅客到达后时刻 (秒)')
     ax[1].set_ylabel('20秒平均流量 (人/分钟)')
-    plt.savefig('Results/'+folder+'.png', dpi=200)
+    plt.savefig('Results/'+folder+'.svg', dpi=200)
 
 
 if __name__ == '__main__':

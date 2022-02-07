@@ -51,11 +51,12 @@ def draw(filepath):
                 ax[j][i].set_ylabel('固定敏感参数')
             ax[j][i].set_ylim([0, 50])
 
-    plt.savefig('fig_3_21_verification.png', dpi=200)
+    # plt.savefig('fig_3_21_verification.png', dpi=200)
+    plt.savefig('fig_3_21_verification.svg')
 
 
 if __name__ == '__main__':
     set_plt()
-    draw(['stochastic_test_data/verification_data/processed unfixed.csv',
-          'stochastic_test_data/verification_data/processed fix insensitive.csv',
-          'stochastic_test_data/verification_data/processed fix sensitive.csv'])
+    draw(['verification_data/result unfixed.csv',
+          'verification_data/result fix insensitive.csv',
+          'verification_data/result fix sensitive.csv'])

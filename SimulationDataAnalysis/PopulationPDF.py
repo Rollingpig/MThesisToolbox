@@ -28,7 +28,7 @@ def pdf_pop(params, field, file_name='mtr-plt', file_prefix='pop-'):
             for ind, f in enumerate(param["file"]):
                 data = read(f)[field]
                 ax[x][y].hist(data, bins=[i for i in range(1000, 2200, 50)],
-                           density=True, histtype='step', color=colors[ind], label=labels[ind])
+                              density=True, histtype='step', color=colors[ind], label=labels[ind])
                 ax[x][y].set_title(param["title"])
                 ax[x][0].set_ylabel("聚集人数分布概率")
 

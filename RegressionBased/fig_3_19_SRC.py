@@ -5,7 +5,7 @@ import statsmodels.api as sm
 from patsy import dmatrices
 import math
 
-from Common import set_plt
+from Common import set_plt_en
 
 
 # Public vars
@@ -15,7 +15,8 @@ light_colors = ['powderblue', 'pink', 'wheat', ]
 input_colors = ['red', 'darkorange', 'gold', 'green', 'darkturquoise', 'dodgerblue', 'purple']
 input_markers = ['o', 'x', '^', 's', '+', 'H', '.']
 colors = ['steelblue', 'red', 'brown', ]
-titles = ['瓶颈最大密度(MDB)', '平均时间冗余比(ATR)', '最大流量(MFR)']
+# titles = ['瓶颈最大密度(MDB)', '平均时间冗余比(ATR)', '最大流量(MFR)']
+titles = ['Max Density at Bottleneck', 'Averaged Time Ratio', 'Max Flow Rate']
 
 
 def regression2(file, sample_num=200):
@@ -70,7 +71,7 @@ def src_bar3(input_output_file_path):
     x = np.arange(len(input_labels))  # the label locations
     grid_dict = {
         'bottom': 0.32,
-        'left': 0.075,
+        'left': 0.085,
         'right': 0.98,
         'top': 0.87,
         'wspace': 0.15,
@@ -113,22 +114,23 @@ def src_bar3(input_output_file_path):
 
         # Axes Layout
         ax[i].set_title(titles[i])
-        # ax[i].set_xlabel('number of samples', fontsize=7)
-        ax[i].set_xlabel('样本量', fontsize=8)
+        ax[i].set_xlabel('number of samples', fontsize=7)
+        # ax[i].set_xlabel('样本量', fontsize=8)
         ax[i].set_xticks(x)
         ax[i].set_xticklabels(sample_list)
         ax[i].set_ylim([0, 1])
         ax[i].set_xlim([math.log(sample_list[0]), math.log(sample_list[-1])])
         if i == 0:
             fig.legend(ncol=7, mode="expand", loc='lower center')
-            # ax[i].set_ylabel('Absolute value of SRC', fontsize=8)
-            ax[i].set_ylabel('SRC绝对值', fontsize=8)
+            ax[i].set_ylabel('Absolute value of SRC', fontsize=8)
+            # ax[i].set_ylabel('SRC绝对值', fontsize=8)
 
     # plt.show()
     plt.savefig('results/fig_3_19_SRC.png', dpi=200)
+    # plt.savefig('results/fig_3_19_SRC.svg')
 
 
 if __name__ == '__main__':
-    set_plt()
+    set_plt_en()
     src_bar3('random_sampling_data/input+result.csv')
     print('hello world')

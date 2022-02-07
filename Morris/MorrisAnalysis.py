@@ -4,7 +4,7 @@ import SALib.plotting.morris
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from Common import set_plt
+from Common import set_plt_en as set_plt
 
 
 # Public vars
@@ -13,12 +13,12 @@ colors = ['steelblue', 'red', 'darkorange', ]
 annotated = ['str_cst', 'avg_int', 'trl_shr', 'grp_shr', 'avg_spd']
 input_colors = ['red', 'darkorange', 'gold', 'green', 'darkturquoise', 'dodgerblue', 'purple']
 input_markers = ['o', 'x', '^', 's', '+', 'H', '.']
-titles = ['瓶颈最大密度(MDB)', '平均时间冗余比(ATR)', '最大流量(MFR)']
-
+# titles = ['瓶颈最大密度(MDB)', '平均时间冗余比(ATR)', '最大流量(MFR)']
+titles = ['Max Density at Bottleneck', 'Averaged Time Ratio', 'Max Flow Rate']
 
 def analysis(problem):
 
-    fig, ax = plt.subplots(nrows=1, ncols=3, constrained_layout=True, figsize=(6.5, 2.0))
+    fig, ax = plt.subplots(nrows=1, ncols=3, constrained_layout=True, figsize=(6, 1.8))
 
     # Read Data
     partial = 400
@@ -46,6 +46,7 @@ def analysis(problem):
         # ax[k].grid(True)
 
     plt.savefig('morris.png', dpi=200)
+    # plt.savefig('morris.svg')
 
 
 if __name__ == '__main__':

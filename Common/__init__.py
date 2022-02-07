@@ -5,8 +5,8 @@ def set_plt():
     med = 8
     # 设置子图上的标题字体
     params = {
-        'font.family': 'simsun',
-        # Youyuan, SimHei, STFangsong, FZYaoti, STXihei,STSong
+        'font.family': 'Microsoft YaHei',
+        # Youyuan, SimHei, STFangsong, FZYaoti, STXihei, STSong, simsun
         'axes.titlesize': 10,
         # 设置图例的字体
         'legend.fontsize': med,

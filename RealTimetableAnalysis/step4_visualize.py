@@ -74,8 +74,11 @@ def ktz_are_large_and_shift_distribution_by_station():
 
 def shift_share(axe):
     data = pd.read_csv('processed/cap_all.csv')
-    sns.countplot(x='终到站', hue='列车类型', data=data, ax=axe,
-                  order=['上海', '上海虹桥','上海南','广州','广州东','广州南','深圳','福田','深圳北',])
+    order = ['上海', '上海虹桥', '上海南', '广州', '广州东',
+             '广州南', '深圳', '福田', '深圳北', ]
+    p = sns.color_palette("Greys_r", n_colors=2)
+    sns.countplot(x='终到站', hue='列车类型', data=data, ax=axe, palette=p,
+                  order=order)
     axe.set_xlabel('(a)每日终到班次数量')
     axe.set_ylabel(None)
     axe.legend(ncol=1, loc='upper right')
@@ -83,6 +86,8 @@ def shift_share(axe):
 
 
 def large_trains_proportion(axe1, axe2):
+    p = sns.color_palette("Greys_r", n_colors=3)
+    color = ['#186CA8', '#87C7F5', '#1E89D6']
     station = "上海"
     data = pd.read_csv('processed/cap_all.csv')
     data = data[data["终到站"] == station]
@@ -97,11 +102,12 @@ def large_trains_proportion(axe1, axe2):
     else:
         n2 = d2.loc['大编组', '车次']
     df = pd.DataFrame({"确切数据": [0, d1.loc['大编组', '车次'], d1.loc['小编组', '车次']],
-                       "推测数据": [n2+d2.loc['小编组', '车次'],0,0],
                        "普速列车": [0, 0, 0],
+                       "推测数据": [n2 + d2.loc['小编组', '车次'], 0, 0],
                        })
     print(df)
-    df.plot(kind='barh', stacked=True, ax=axe1, color=['#186CA8', '#87C7F5', '#1E89D6'], legend=None)
+
+    df.plot(kind='barh', stacked=True, ax=axe1, color=p[:], legend=None)
     # axe1.legend(ncol=1, loc='lower right')
 
     non_inter = data[data['duration'] > 150]
@@ -110,11 +116,11 @@ def large_trains_proportion(axe1, axe2):
     non_inter2 = non_inter[pd.isnull(non_inter['capacity'])]
     d2 = non_inter2.groupby("编组").count()
     df = pd.DataFrame({"确切数据": [0, d1.loc['大编组', '车次'], d1.loc['小编组', '车次']],
-                       "推测数据": [d2.loc['小编组', '车次'], 0, 0, ],
                        "普速列车": [0, d2.loc['大编组', '车次'], 0],
+                       "推测数据": [d2.loc['小编组', '车次'], 0, 0, ],
                        })
     print(df)
-    df.plot(kind='barh', stacked=True, ax=axe2, color=['#186CA8', '#87C7F5', '#1E89D6'], legend=None)
+    df.plot(kind='barh', stacked=True, ax=axe2, color=p[:], legend=None)
     axe2.tick_params(axis="y", rotation=0)
 
     axe1.set_ylabel(None)
@@ -138,7 +144,7 @@ def fig_3_6():
     gs3 = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=gs0[8:15, 1:2])
     ax3 = fig.add_subplot(gs3[:])
     large_trains_proportion(ax2, ax3)
-    plt.savefig('results/fig3_6.png', dpi=200)
+    plt.savefig('results/fig3_6.svg', dpi=200)
 
 
 if __name__ == '__main__':

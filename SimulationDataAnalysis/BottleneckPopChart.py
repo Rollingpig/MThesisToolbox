@@ -58,7 +58,7 @@ def bottleneck_population(field='gate-front', ylabel='出站闸机口聚集人�
     ax[row][0].set_xlabel("列车到达时间（秒）")
     ax[row][1].set_xlabel("列车到达时间（秒）")
 
-    plt.savefig('results/pop-'+field+'.png', dpi=300)
+    plt.savefig('results/pop-'+field+'.svg', dpi=300)
 
 
 def bottleneck_population_one_row(field='gate-front', ylabel='出站闸机口聚集人数', ylim=(0, 400), offset_short=1.0, offset_long=1.0):
@@ -91,12 +91,12 @@ def bottleneck_population_one_row(field='gate-front', ylabel='出站闸机口聚
     ax[0].set_xlabel("列车到达时间（秒）")
     ax[1].set_xlabel("列车到达时间（秒）")
 
-    plt.savefig('results/pop-'+field+'.png', dpi=300)
+    plt.savefig('results/pop-'+field+'.svg', dpi=300)
 
 
 if __name__ == '__main__':
     Common.set_plt()
-    # bottleneck_population_one_row(field='gate-front', ylabel='出站闸机口聚集人数', ylim=(0, 200), offset_long=1, offset_short=1)
+    bottleneck_population_one_row(field='gate-front', ylabel='出站闸机口聚集人数', ylim=(0, 200), offset_long=1, offset_short=1)
     bottleneck_population(field='Interchange', ylabel='换乘大厅聚集人数', ylim=(0, 300), offset_long=1.5, offset_short=1.5)
-    # bottleneck_population(field='mtr-platform', ylabel='地铁站台人数增量', ylim=(0, 250), offset_long=5, offset_short=5)
-    # bottleneck_population(field='mtr-concourse', ylabel='地铁站厅人数增量', ylim=(0, 200), offset_long=2, offset_short=2)
+    bottleneck_population(field='mtr-platform', ylabel='地铁站台人数增量', ylim=(0, 250), offset_long=5, offset_short=5)
+    bottleneck_population(field='mtr-concourse', ylabel='地铁站厅人数增量', ylim=(0, 200), offset_long=2, offset_short=2)

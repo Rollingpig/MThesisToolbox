@@ -19,7 +19,8 @@ def read_alight(file):
 
 
 def pie(x, axe, labels, title, startangle=0):
-    axe.pie(x=x, labels=labels, autopct='%1.1f%%', colors=['#186CA8', '#87C7F5'],
+    p = sns.color_palette("Greys_r", n_colors=2)
+    axe.pie(x=x, labels=labels, autopct='%1.1f%%', colors=p,
             wedgeprops={'linewidth': 0.7, 'edgecolor': '#444444'},
             startangle=startangle, radius=1)
     axe.set_xlabel(title)
@@ -51,8 +52,8 @@ def alight_analysis():
     r2 = d[d['isTrolley'] == 1]['interval']
     Common.statsDraw.two_sample_hist_all(r1, r2, ax, (110, 90))'''
 
-    p = sns.color_palette("ch:s=.25,rot=-.25", as_cmap=False)
-    sns.boxplot(x='isTrolley', y='interval', data=d, ax=ax,
+    p = sns.color_palette("Greys", n_colors=2)
+    sns.boxplot(x='isTrolley', y='interval', data=d, ax=ax, palette=p,
                 linewidth=1, color=[24/255, 108/255, 168/255])
     ax.set_ylabel('下车间隔（秒）')
     ax.set_xlabel(None)
@@ -66,7 +67,7 @@ def alight_analysis():
     # pie(x=[107, 163 - 107], labels=['携带拉杆箱', '未携带'], axe=ax5, title='(e)非城际列车旅客')
     pie(x=[266, 737 - 266], labels=['携带拉杆箱', '未携带'], axe=ax5, title='(e)非城际列车旅客')
 
-    plt.savefig('Results/fig_3_23.png', dpi=200)
+    plt.savefig('Results/fig_3_23.svg', dpi=200)
 
 
 if __name__ == '__main__':

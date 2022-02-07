@@ -37,7 +37,7 @@ def gate_trip_and_los():
     ax[0].get_legend().remove()
     ax[1].legend()
 
-    plt.savefig('results/trip-gate.png', dpi=200)
+    plt.savefig('results/trip-gate.svg')
 
 
 def section_trip_and_los(place='platform', text='地铁站台'):
@@ -68,7 +68,7 @@ def section_trip_and_los(place='platform', text='地铁站台'):
     ax[0].get_legend().remove()
     ax[1].get_legend().remove()
 
-    plt.savefig('results/trip-' + place + '.png', dpi=200)
+    plt.savefig('results/trip-' + place + '.svg')
 
 
 def lobby_pop():
@@ -85,26 +85,37 @@ def lobby_pop():
     plt.savefig('results/pop-lobby.png', dpi=200)
 
 
-def lobby_composite():
-    """不同条件下出站通道旅客平均最高聚集人数、通行耗时、低水平持续时间的对比，
-    其中数据点上的竖线代表95%置信水平下的置信区间。"""
+def lobby_composite(data, data2, save_path):
     fig, ax = plt.subplots(nrows=1, ncols=3, constrained_layout=True,
-                           figsize=(10, 2), )
+                           figsize=(12, 2), )
 
-    data = pd.read_csv('processed data/pop-mtr-platform.csv')
-    point_plot(ax[2], data, title='换乘大厅最高聚集人数', x='安检模式', y='maxPop', hue='编组大小x公交分担')
-    ax[2].set_ylabel('最高聚集人数')
+    data['编组大小x公交分担'] = data['编组大小x公交分担'].replace('非城际列车 2045年', 'Long Shifts 2045', False)
+    data['编组大小x公交分担'] = data['编组大小x公交分担'].replace('城际列车 2045年', 'Short Shifts 2045', False)
+    data['编组大小x公交分担'] = data['编组大小x公交分担'].replace('非城际列车 2035年', 'Long Shifts 2035', False)
+    data['编组大小x公交分担'] = data['编组大小x公交分担'].replace('城际列车 2035年', 'Short Shifts 2035', False)
+
+    # point_plot(ax[2], data, title='换乘大厅最高聚集人数', x='安检模式', y='maxPop', hue='编组大小x公交分担')
+    # ax[2].set_ylabel('最高聚集人数')
+    point_plot(ax[2], data, title='Max Population', x='安检模式', y='maxPop', hue='编组大小x公交分担')
+    ax[2].set_ylabel('Max Population')
+    ax[2].set_xticklabels(['Traditional', 'No Additional\n Checks', 'Facial Recognition'])
     ax[2].legend(loc=(1.05, 0.2), labelspacing=1, ncol=1)
 
-    data = pd.read_csv('processed data/trip-platform.csv')
-    point_plot(ax[0], data, title='换乘大厅通行耗时', x='安检模式', y='Duration', hue='编组大小x公交分担')
-    ax[0].set_ylabel('通行耗时（秒）')
+    # point_plot(ax[0], data, title='换乘大厅通行耗时', x='安检模式', y='Duration', hue='编组大小x公交分担')
+    # ax[0].set_ylabel('通行耗时（秒）')
+    point_plot(ax[0], data2, title='Travel Time', x='安检模式', y='Duration', hue='编组大小x公交分担')
+    ax[0].set_ylabel('Time (sec)')
     ax[0].get_legend().remove()
-    point_plot(ax[1], data, title='换乘大厅低水平持续时间', x='安检模式', y='LOS Duration', hue='编组大小x公交分担')
-    ax[1].set_ylabel('低水平持续时间（秒）')
-    ax[1].get_legend().remove()
+    ax[0].set_xticklabels(['Traditional', 'No Additional\n Checks', 'Facial Recognition'])
 
-    plt.savefig('results/composite_platform.png', dpi=200)
+    # point_plot(ax[1], data, title='换乘大厅低水平持续时间', x='安检模式', y='LOS Duration', hue='编组大小x公交分担')
+    # ax[1].set_ylabel('低水平持续时间（秒）')
+    point_plot(ax[1], data2, title='Congestion Duration', x='安检模式', y='LOS Duration', hue='编组大小x公交分担')
+    ax[1].set_ylabel('Time (sec)')
+    ax[1].get_legend().remove()
+    ax[1].set_xticklabels(['Traditional', 'No Additional\n Checks', 'Facial Recognition'])
+
+    plt.savefig(save_path, dpi=200)
 
 
 if __name__ == '__main__':
@@ -113,4 +124,12 @@ if __name__ == '__main__':
     # section_trip_and_los('lobby', '换乘大厅')
     # section_trip_and_los('concourse', '地铁站厅')
     # gate_trip_and_los()
-    lobby_composite()
+    lobby_composite(pd.read_csv('processed data/pop-Interchange.csv'),
+                    pd.read_csv('processed data/trip-lobby.csv'),
+                    'results/composite_lobby.png')
+    lobby_composite(pd.read_csv('processed data/pop-mtr-concourse.csv'),
+                    pd.read_csv('processed data/trip-concourse.csv'),
+                    'results/composite_concourse.png.png')
+    lobby_composite(pd.read_csv('processed data/pop-mtr-platform.csv'),
+                    pd.read_csv('processed data/trip-platform.csv'),
+                    'results/composite_platform.png')
